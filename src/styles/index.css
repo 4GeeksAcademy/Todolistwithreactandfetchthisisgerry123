@@ -1,12 +1,113 @@
+body{
+  display: flex;
+  background-color: rgb(245,245,245);
+  justify-content: center;
+}
 
-/* 
+h1{
+  color: rgb(233, 216, 216);
+  font-size: 8rem;
+  font-family: "Roboto", sans-serif;
+font-weight: 100;
+font-style: normal;
+text-align: center
+}
+.card{
+  margin-bottom: 10rem;
+  background-color: rgb(247,247,247);
+  width: 700px;
+  border-radius: 0px;
+  box-shadow:
+  /* The top layer shadow */
+  0 1px 1px rgba(0,0,0,0.15),
+  /* The second layer */
+  0 10px 0 -5px #eee,
+  /* The second layer shadow */
+  0 10px 1px -4px rgba(0,0,0,0.15),
+   /* The third layer */
+  0 20px 0 -10px #eee,
+  /* The third layer shadow */
+  0 20px 1px -9px rgba(0,0,0,0.15),
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+  0px 15px 20px 10px rgba(244, 228, 228, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  /* Padding for demo purposes */
+  padding: 5px;
+   
+}
+button{
+  transition: 0.5s ease;
+  background-color:rgb(247,247,247);  
+  font-size: 1rem;
+  padding-right: 10px;
+  font-weight: none;
+  color: rgb(231, 173, 176);
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+}
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
-*/
+.delete-button {
+  display: none;
+  margin-left: 10px;
+}
+
+.task-item:hover .delete-button {
+  display: inline-block;
+}
+.delete-button:hover {
+  color: rgb(183, 103, 89);
+}
+input[type="text"]{
+  margin-top: 5px;
+  color: rgb(130,130,130) ;
+  background-color:hsl(0, 0%, 97%);;
+  font-size: 25px;
+  font-weight: lighter;
+  padding-left: 60px;
+  border: none;
+  border-radius: 0px;
+}
+input:focus{
+  outline: none;
+}
+ol{
+  padding: 0;
+}
+li{
+  color:rgb(130,130,130);
+  font-size: 25px;
+  font-weight: lighter;
+  padding-left: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: hsl(0, 0%, 97%);
+  margin: 0px;
+  border-radius: 0px;
+  border-bottom: solid 1px rgb(243,239,240) ;
+  display: flex;
+  align-items: center;
+  justify-content: center
+  ;
+}
+
+.to-do-list{
+  background-color: rgb(245,245,245);
+  margin: 0 auto;
+}
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.tasksRemaining{
+  margin: none;
+  color: rgb(183,183,183);
+  padding-left: 15px;
+}

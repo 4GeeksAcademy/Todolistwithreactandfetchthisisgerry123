@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import ToDoList from "./ToDoList.jsx";
+import AmountOfTasksRemaining from "./AmountOfTasksRemaining.jsx";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+    const [tasks, setTasks] = useState(["Eat Breakfast", "Take a shower", "Walk the dog"]);
+
+    return (
+        <>
+            <div className="title">
+                <h1 className="mt-5">todos</h1>
+            </div>
+            <div className="card">
+                <div>
+                    <ToDoList tasks={tasks} setTasks={setTasks} />
+                </div>
+                <span className="tasksRemaining">
+                    <AmountOfTasksRemaining tasks={tasks} />
+                </span>
+            </div>
+        </>
+    );
 };
 
 export default Home;
