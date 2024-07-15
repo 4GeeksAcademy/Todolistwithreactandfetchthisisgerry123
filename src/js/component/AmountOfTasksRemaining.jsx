@@ -1,10 +1,14 @@
 import React from "react";
 
-function AmountOfTasksRemaining({ tasks }) {
+function AmountOfTasksRemaining({ tasks, addTask, clearAllTasks }) {
     let amountOfTasksRemaining = tasks.length; // Get the length of the tasks array
 
     return (
-        <p>{amountOfTasksRemaining} item{amountOfTasksRemaining !== 1 ? 's' : ''} left</p>
+        <div className="tasks-info">
+            <p>{amountOfTasksRemaining} item{amountOfTasksRemaining !== 1 ? 's' : ''} left</p>
+            <button onClick={addTask}>Add Task</button>
+            <button onClick={clearAllTasks}>Clear All Tasks</button>
+        </div>
     );
 }
 
