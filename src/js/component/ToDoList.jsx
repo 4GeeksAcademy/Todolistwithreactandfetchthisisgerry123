@@ -3,22 +3,7 @@ import React, { useEffect, useState } from 'react';
 const ToDoList = ({ tasks, setTasks, userName, addTask, deleteTask }) => {
     const [newTask, setNewTask] = useState("");
 
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-
-    const fetchTasks = async () => {
-        try {
-            const response = await fetch(`https://playground.4geeks.com/todo/users/thisisgerry123`);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch tasks: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            setTasks(data.todos);
-        } catch (error) {
-            console.log("Error fetching tasks:", error.message);
-        }
-    };
+    
 
     const handleInputChange = (e) => {
         setNewTask(e.target.value);

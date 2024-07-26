@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ToDoList from "./ToDoList.jsx";
 import AmountOfTasksRemaining from "./AmountOfTasksRemaining.jsx";
+import {
+    fetchTasks,
+    addTasksToApi,
+    deleteTaskFromApi,
+    deleteAllTasksAndUserFromApi,
+    FetchAll,
+} from "../updateApi.js"
 
 const Home = () => {
     const [tasks, setTasks] = useState([]);
@@ -40,7 +47,7 @@ const Home = () => {
     };
 
     const addTask = async (newTask) => {
-        const updatedTasks = [...tasks, { label: newTask.trim(), is_done: false }];
+        const updatedTasks = [...tasks, { label: newTask, is_done: false }];
         setTasks(updatedTasks);
         await updateServerTasks(updatedTasks);
     };
