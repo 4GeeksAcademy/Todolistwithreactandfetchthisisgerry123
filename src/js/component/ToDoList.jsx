@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-const ToDoList = ({ tasks, setTasks, userName, addTask, deleteTask }) => {
+const ToDoList = ({ tasks, setTasks, addTask, deleteTask }) => {
     const [newTask, setNewTask] = useState("");
-
-    
 
     const handleInputChange = (e) => {
         setNewTask(e.target.value);
@@ -25,17 +23,22 @@ const ToDoList = ({ tasks, setTasks, userName, addTask, deleteTask }) => {
                 onKeyDown={handleKeyPress}
                 onChange={handleInputChange}
             />
+            {/* <button onClick={() => { addTask(newTask); setNewTask(""); }}>Add Task</button> */}
             <ol>
-                {tasks.map((task, index) => (
-                    <li key={index} className="task-item">
-                        <span className="text">{task.label}</span>
-                        <button
-                            className="delete-button"
-                            onClick={() => deleteTask(index)}>
-                            <i className="fa-solid fa-x"></i>
-                        </button>
-                    </li>
-                ))}
+                {tasks.length === 0 ? (
+                    <li className = "No-tasks-in-list">No tasks, add a task</li>
+                ) : (
+                    tasks.map((task, index) => (
+                        <li key={index} className="task-item">
+                            <span className="text">{task.label}</span>
+                            <button
+                                className="delete-button"
+                                onClick={() => deleteTask(task.id)}>
+                                <i className="fa-solid fa-x"></i>
+                            </button>
+                        </li>
+                    ))
+                )}
             </ol>
         </div>
     );

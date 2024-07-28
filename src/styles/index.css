@@ -111,3 +111,7 @@ li{
   color: rgb(183,183,183);
   padding-left: 15px;
 }
+.No-tasks-in-list{
+  color:rgb(130,130,130);
+  font-size: 25px;
+}

@@ -6,62 +6,31 @@ import {
     addTasksToApi,
     deleteTaskFromApi,
     deleteAllTasksAndUserFromApi,
-    FetchAll,
-} from "../updateApi.js"
+    handleCreateUser
+} from "../updateApi.js";
 
 const Home = () => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        fetchTasks();
+        fetchTasks(setTasks);
     }, []);
 
-    const fetchTasks = async () => {
-        try {
-            const response = await fetch("https://playground.4geeks.com/todo/users/thisisgerry123");
-            if (!response.ok) {
-                throw new Error(`Failed to fetch tasks: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            setTasks(data.todos);
-        } catch (error) {
-            console.log("Error fetching tasks:", error.message);
-        }
-    };
-
-    const updateServerTasks = async (updatedTasks) => {
-        try {
-            const response = await fetch("https://playground.4geeks.com/todo/users/thisisgerry123", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updatedTasks),
-            });
-            if (!response.ok) {
-                throw new Error("Failed to update tasks on the server");
-            }
-        } catch (error) {
-            console.error("Error updating tasks on the server:", error);
-        }
-    };
-
     const addTask = async (newTask) => {
-        const updatedTasks = [...tasks, { label: newTask, is_done: false }];
-        setTasks(updatedTasks);
-        await updateServerTasks(updatedTasks);
+        await addTasksToApi(tasks, newTask, setTasks);
     };
 
     const deleteTask = async (taskId) => {
-        const updatedTasks = tasks.filter((task, index) => index !== taskId);
-        setTasks(updatedTasks);
-        await updateServerTasks(updatedTasks);
+        await deleteTaskFromApi(taskId, setTasks);
     };
 
     const clearAllTasks = async () => {
-        const emptyTasks = [];
-        setTasks(emptyTasks);
-        await updateServerTasks(emptyTasks);
+        await deleteAllTasksAndUserFromApi(setTasks);
+    };
+
+    const deleteUser = async () => {
+        await deleteAllTasksAndUserFromApi(setTasks);
+        handleCreateUser(setTasks);
     };
 
     return (
@@ -76,6 +45,7 @@ const Home = () => {
                 <span className="tasksRemaining">
                     <AmountOfTasksRemaining tasks={tasks} addTask={addTask} clearAllTasks={clearAllTasks} />
                 </span>
+                <button onClick={deleteUser}> Delete User</button>
             </div>
         </>
     );

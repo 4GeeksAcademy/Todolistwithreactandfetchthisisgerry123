@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
-
+import React, { useEffect, useState } from "react";
 
 export const checkUserExists = async () => {
     try {
-        const response = await fetch(`https://playground.4geeks.com/todo/users//users?limit=100`);
+        const response = await fetch(`https://playground.4geeks.com/todo/users/users?`);
         if (!response.ok) {
             throw new Error("Failed to fetch users. Status: " + response.status);
         }
@@ -16,18 +15,40 @@ export const checkUserExists = async () => {
     }
 };
 
-// export const fetchTasks = async (setTasks) => {
-//     try {
-//         const response = await fetch(`https://playground.4geeks.com/todo/users/thisisgerry123`);
-//         if (!response.ok) {
-//             throw new Error(`Failed to fetch tasks: ${response.status} ${response.statusText}`);
-//         }
-//         const data = await response.json();
-//         setTasks(data.todos);
-//     } catch (error) {
-//         console.log("Error fetching tasks:", error.message);
-//     }
-// };
+export const deleteTaskFromApi = async (taskId, setTasks) => {
+    try {
+        const response = await fetch(`https://playground.4geeks.com/todo/todos/${taskId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("failed to delete task. status: " + response.status);
+        }
+        fetchTasks(setTasks);
+    } catch (error) {
+        console.error("error deleting task from API:", error);
+    }
+};
+
+export const deleteAllTasksAndUserFromApi = async (setTasks) => {
+    try {
+        const response = await fetch(`https://playground.4geeks.com/todo/users/thisisgerry123`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("failed to delete user and tasks. status: " + response.status);
+        }
+        console.log("User and tasks deleted successfully from API");
+        setTasks([]);
+    } catch (error) {
+        console.error("error deleting user and tasks from API:", error);
+    }
+};
 
 export const fetchTasks = (setTasks) => {
     fetch("https://playground.4geeks.com/todo/users/thisisgerry123")
@@ -51,7 +72,7 @@ export const fetchTasks = (setTasks) => {
         });
 };
 
-export const FetchAll = ({setTasks}) =>{
+export const FetchAll = ({ setTasks }) => {
     const [initialFetchDone, setInitialFetchDone] = useState(false);
 
     useEffect(() => {
@@ -63,7 +84,7 @@ export const FetchAll = ({setTasks}) =>{
     return null;
 };
 
-export const addTasksToApi = async( tasks, newTask, setTasks) => {
+export const addTasksToApi = async (tasks, newTask, setTasks) => {
     try {
         const userExists = await checkUserExists();
         if (!userExists) {
@@ -84,7 +105,7 @@ export const addTasksToApi = async( tasks, newTask, setTasks) => {
             throw new Error("failed to add task. status: " + response.status);
         }
         const data = await response.json();
-        updatedTasks = [
+        const updatedTasks = [
             ...tasks,
             { ...sendTask, id: data.id },
         ];
@@ -92,11 +113,11 @@ export const addTasksToApi = async( tasks, newTask, setTasks) => {
         fetchTasks(setTasks);
 
     } catch (error) {
-        console.error("error adding taks to API:", error);
+        console.error("error adding task to API:", error);
     }
 };
 
-export const deleteTaskFromApi = async (taskId, setTasks)=> {
+export const removeTaskFromApi = async (taskId, setTasks) => {
     try {
         const response = await fetch(`https://playground.4geeks.com/todo/todos/${taskId}`, {
             method: "DELETE",
@@ -109,29 +130,8 @@ export const deleteTaskFromApi = async (taskId, setTasks)=> {
         }
         fetchTasks(setTasks);
 
-    }  catch (error) {
-        console.error("error deleting taks to API:", error);
-    }
-};
-
-export const deleteAllTasksAndUserFromApi = async (setTasks)=> {
-    try {
-        const response = await fetch(`https://playground.4geeks.com/todo/users/thisisgerry123}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        if (!response.ok) {
-            throw new Error("failed to delete user and tasks. status: " + response.status);
-        }
-        console.log("User and tasks deleted successfully from API");
-        setTasks(
-            []
-        );
-
-    }  catch (error) {
-        console.error("error deleting user and tasks from API:", error);
+    } catch (error) {
+        console.error("error deleting task to API:", error);
     }
 };
 
@@ -143,11 +143,11 @@ export const handleCreateUser = (setTasks) => {
             "Content-Type": "application/json",
         },
     })
-    .then((resp) => {
-        if (resp.ok) {
-            console.log("User has been created succesfully in API")
-            fetchTasks(setTasks);
-        }
-    })
-    .catch((error) => console.error("error creating user in API:", error));
+        .then((resp) => {
+            if (resp.ok) {
+                console.log("User has been created successfully in API");
+                fetchTasks(setTasks);
+            }
+        })
+        .catch((error) => console.error("error creating user in API:", error));
 };

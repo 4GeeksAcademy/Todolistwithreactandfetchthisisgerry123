@@ -6,7 +6,7 @@ function AmountOfTasksRemaining({ tasks, addTask, clearAllTasks }) {
     return (
         <div className="tasks-info">
             <p>{amountOfTasksRemaining} item{amountOfTasksRemaining !== 1 ? 's' : ''} left</p>
-            <button onClick={addTask}>Add Task</button>
+            <button onClick={() => addTask("New Task")}>Add Task</button>
             <button onClick={clearAllTasks}>Clear All Tasks</button>
         </div>
     );
